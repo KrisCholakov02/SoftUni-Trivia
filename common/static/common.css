@@ -1,0 +1,146 @@
+*{
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	margin:0;
+	padding: 0;
+}
+body{
+	background-color: #556676;
+	margin: 0;
+	padding: 0;
+}
+.logo{
+  color: black;
+  border: 2px solid black;
+  letter-spacing: 10px;
+  display: inline;
+  text-transform: uppercase;
+  font-size: 30px;
+  padding: 7px 15px;
+}
+
+
+.main_element{
+	background-color: #A8DADC;
+	color: white;
+	width: 100%;
+	height: 70px;
+    line-height: 70px;
+    padding: 0 50px;
+    margin-bottom: 20px;
+    border-bottom: 0.2vw solid #1D3557;
+    z-index: 1000;
+}
+
+
+
+ul{
+	list-style-type: none;
+  float: right;
+}
+.main_element > ul >li{
+  padding: 0 30px;
+  display: block;
+  float: left;
+  height: 70px;
+  position: relative;
+}
+.main_element > ul >li:hover{
+  background-color: #F1FAEE;
+
+}
+a:hover{
+    color: black;
+}
+/*************************************************/
+.inside_items{
+  display: none;
+  position: absolute;
+  top:70px;
+  left: 0px;
+  border: solid 0.1vw #1D3557;
+}
+.inside_items li{
+  width: 200px;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 30px;
+  background-color: #A8DADC;
+  z-index: 100000000;
+}
+.inside_items li:hover{
+  background-color: #A8DADC;
+  color: #F1FAEE;
+}
+.inside_items .inside_items:hover{
+  background-color: #A8DADC;
+  color: #F1FAEE;
+}
+li:hover .inside_items{
+  display: block;
+}
+a{
+	text-decoration: none;
+	color:black;
+	font-size: 1.8vw;
+}
+.show::after{
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 9px solid black;
+      position: absolute;
+      top: 35px;
+      right:8px;
+}
+/********************************************************/
+.father{
+  position: relative;
+}
+.inside_items2
+{
+  display: none;
+  position: absolute;
+  left: 200px;
+ }
+.father:hover .inside_items2{
+  display: inline-block;
+}
+.father::after{
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 9px solid black;
+      position: absolute;
+      top: 25px;
+      right:40px;
+}
+.inside_items2 li{
+  border-bottom: black 1px solid;
+}
+.inside_items2 li{
+  font-size: 15px;
+}
+.inside_items2 li:hover{
+  background-color:  #726767;
+}
+.inside_items2 li:hover a{
+  color: white;
+}
+/***********************************************************/
+.text{
+  text-transform: uppercase;
+  display: inline-block;
+  font-size: 100px;
+  color: #ffffff;
+  width: 100%;
+  text-align: center;
+  margin:20px 0;
+  font-family: 'Staatliches', cursive;
+  letter-spacing: 20px;}

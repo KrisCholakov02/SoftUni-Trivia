@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+{% block 'body' %}
+
+<div class="form-container">
+    <form method="post" class="form">
+        <h2 style="width: 100%; border-bottom: 0.1vw solid #1D3557;">Sign Up</h2>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="submit-btn" type="submit">Sign up</button>
+        <span>Have an account? <a href="{% url 'login' %}" style="color:#E63946">Sign in here</a></span>
+    </form>
+</div>
+
+{% endblock %}

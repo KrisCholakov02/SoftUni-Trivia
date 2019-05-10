@@ -1,0 +1,10 @@
+.information-container {
+   background-color: #A8DADC;
+   height: max-content;
+   padding: 2vw;
+}
+
+.inf-list {
+   list-style-type: disc;
+   float: none;
+}

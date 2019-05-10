@@ -1,0 +1,22 @@
+/*
+red -> #E63946
+white -> #F1FAEE
+light-blue -> #A8DADC
+mid-blue -> #457B9D
+dark-blue -> #1D3557
+font-family: 'Stylish', sans-serif;
+*/
+.submit-btn {
+    font-size: 1.5vw;
+    background-color: #457B9D;
+    color: #F1FAEE;
+}
+
+.submit-btn:hover {
+    background-color: #1D3557;
+}
+
+.ans-inp {
+    border: solid 0.1vw #1D3557
+    color: #457B9D;
+}

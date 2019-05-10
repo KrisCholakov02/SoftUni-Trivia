@@ -1,0 +1,38 @@
+/*
+red -> #E63946
+white -> #F1FAEE
+light-blue -> #A8DADC
+mid-blue -> #457B9D
+dark-blue -> #1D3557
+font-family: 'Stylish', sans-serif;
+*/
+* {
+    font-family: 'Stylish', sans-serif;
+    color: #1D3557;
+}
+body {
+    background-color: #F1FAEE;
+}
+
+.form-container {
+    background-color: #A8DADC;
+    width: 50%;
+    margin-left: 24%;
+    height: max-content;
+    border: 0.2vw solid #1D3557;
+    padding: 1%;
+}
+
+.form {
+    width: 100%;
+    height: max-content;
+}
+
+.submit-btn {
+    font-size: 1.5vw;
+    background-color: #F1FAEE;
+}
+
+a {
+    color: #1D3557;
+}
