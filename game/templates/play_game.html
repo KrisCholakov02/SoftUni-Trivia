@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+{% block 'body' %}
+<div class="gameContainer">
+    <div class="questionContainer">
+        {{ playing_question.question }}
+    </div>
+    <div class="answersContainer">
+        <div class="answer">
+            {{ playing_question.answer1 }}
+        </div>
+        <div class="answer">
+            {{ playing_question.answer2 }}
+        </div>
+        <div style="width: 100%; height: 0.1vw; background-color: #1D3557;"></div>
+        <div class="answer">
+            {{ playing_question.answer3 }}
+        </div>
+        <div class="answer">
+            {{ playing_question.correct_answer }}
+        </div>
+    </div>
+</div>
+{% endblock %}
