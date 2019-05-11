@@ -9,10 +9,10 @@ from .forms import CreateQuestionForm, LevelForm
 from accounts.models import ProfileUser
 
 
-def has_access_to_modify(current_user, furniture):
+def has_access_to_modify(current_user, questions):
     if current_user.is_superuser:
         return True
-    elif current_user.id == furniture.user.id:
+    elif current_user.id == questions.user.id:
         return True
     return False
 
@@ -53,13 +53,13 @@ class QuestionDelete(LoginRequiredMixin, generic.DeleteView):
     def get(self, request, pk):
         if not has_access_to_modify(self.request.user, self.get_object()):
             return render(request, 'permission_denied.html')
-        return render(request, 'question_delete.html', {'furniture': self.get_object()})
+        return render(request, 'question_delete.html', {'question': self.get_object()})
 
     def post(self, request, pk):
         if not has_access_to_modify(self.request.user, self.get_object()):
             return render(request, 'permission_denied.html')
-        furniture = self.get_object()
-        furniture.delete()
+        question = self.get_object()
+        question.delete()
         return HttpResponseRedirect('/game/')
 
 
