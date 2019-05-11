@@ -11,8 +11,7 @@
         <li><a href="#" class="show">Profile</a>
             <div class="inside_items">
                 <ul>
-                    <li><a href="#">Edit</a></li>
-                    <li><a href="{% url 'profile-user' user.pk %}">Details</a></li>
+                    <li><a href="{% url 'profile-user' user.id %}">Details</a></li>
                     <li><a href="#">My games</a></li>
                     <li><a href="{% url 'my_questions' %}">My questions</a></li>
                 </ul>

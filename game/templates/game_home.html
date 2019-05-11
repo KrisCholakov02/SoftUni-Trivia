@@ -2,7 +2,7 @@
 {% block 'body' %}
 {% if user.is_authenticated %}
 <div class="information-container">
-    <h2>Hello {{ user.username }}, <br>
+    <h2>Hello <a href="{% url 'profile-user' user.id %}">{{ user.username }}</a>, <br>
         <ul class="inf-list">
             <li>If you want to play our little trivia game, you can press the "Play" button.</li>
             <li>If you want to see or edit your account details, you can press the "Profile" button.</li>

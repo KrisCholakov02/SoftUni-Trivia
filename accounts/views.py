@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.views import generic
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, User
 
 from .models import ProfileUser
 
@@ -9,7 +9,7 @@ from .models import ProfileUser
 class UserDetail(generic.DetailView):
     model = ProfileUser
     template_name = 'profile_user.html'
-    context_object_name = 'user'
+    context_object_name = 'my_user'
 
 
 class SignUp(generic.CreateView):
