@@ -2,7 +2,7 @@
 {% block 'body' %}
 {% if user.is_authenticated %}
     <h1>Hello, {{ my_user.user.username }}!</h1>
-    <h1>Do you want to <a style="font-size: 2.2vw; color: #E63946;" href="">edit</a> your profile?</h1>
+    <h1>Do you want to <a style="font-size: 2.2vw; color: #E63946;" href="{% url 'profile-edit' user.id %}">edit</a> your profile?</h1>
     <h3>or...</h3>
 
 <div class="row" style="margin-top:10%">

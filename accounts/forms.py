@@ -5,17 +5,39 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from accounts.models import ProfileUser
 
 
-class EditProfileUserForm(UserChangeForm):
-    template_name = 'questions/templates/question_create.html'
+class EditProfileUserForm(forms.ModelForm):
+    first_name = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control ans-inp'
+        }
+    ))
+    last_name = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control ans-inp'
+        }
+    ))
+    profile_picture = forms.URLField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control ans-inp'
+        }
+    ))
+    description = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control ans-inp'
+        }
+    ))
+    city = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control ans-inp'
+        }
+    ))
 
     class Meta:
-        model = User
+        model = ProfileUser
         fields = (
-            'email',
             'first_name',
             'last_name',
             'profile_picture',
             'description',
             'city',
-
         )
