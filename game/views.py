@@ -27,13 +27,13 @@ class GameTactics:
         other_answer = answers[random_number]
         f_answers = [correct_answer, other_answer]
         random.shuffle(f_answers)
-        return render_to_response('play_game.html', {'playing_question': question, 'answers': f_answers})
+        return render_to_response('play_game.html', {'playing_question': question, 'answers': f_answers, 'user': request.user})
 
     def right_answer(request, pk):
         question = Questions.objects.get(pk=pk)
         correct_answer = question.correct_answer
         answers = [correct_answer]
-        return render_to_response('play_game.html', {'playing_question': question, 'answers': answers})
+        return render_to_response('play_game.html', {'playing_question': question, 'answers': answers, 'user': request.user})
 
     def remove_answer(request, pk):
         question = Questions.objects.get(pk=pk)
@@ -43,7 +43,7 @@ class GameTactics:
         answers.remove(answers[2])
         answers.append(correct_answer)
         random.shuffle(answers)
-        return render_to_response('play_game.html', {'playing_question': question, 'answers': answers})
+        return render_to_response('play_game.html', {'playing_question': question, 'answers': answers, 'user': request.user})
 
     def start_game(request):
         while True:
@@ -55,7 +55,7 @@ class GameTactics:
                 question = Questions.objects.get(pk=random_number)
                 answers = [question.answer1, question.answer2, question.answer3, question.correct_answer]
                 random.shuffle(answers)
-                return render_to_response('play_game.html', {'playing_question': question, 'answers': answers})
+                return render_to_response('play_game.html', {'playing_question': question, 'answers': answers, 'user': request.user})
 
     def next_question(request):
         while True:
@@ -67,7 +67,7 @@ class GameTactics:
                 question = Questions.objects.get(pk=random_number)
                 answers = [question.answer1, question.answer2, question.answer3, question.correct_answer]
                 random.shuffle(answers)
-                return render_to_response('play_game.html', {'playing_question': question, 'answers': answers})
+                return render_to_response('play_game.html', {'playing_question': question, 'answers': answers, 'user': request.user})
 
 
 
