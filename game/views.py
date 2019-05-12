@@ -18,13 +18,13 @@ class GameTactics():
         random.shuffle(f_answers)
         return render_to_response('play_game.html', {'playing_question': question, 'answers': f_answers})
 
-    def right_one(request, pk):
+    def right_answer(request, pk):
         question = Questions.objects.get(pk=pk)
         correct_answer = question.correct_answer
         answers = [correct_answer]
         return render_to_response('play_game.html', {'playing_question': question, 'answers': answers})
 
-    def remove_one(request, pk):
+    def remove_answer(request, pk):
         question = Questions.objects.get(pk=pk)
         correct_answer = question.correct_answer
         answers = [question.answer1, question.answer2, question.answer3]
