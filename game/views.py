@@ -16,12 +16,16 @@ class GameTactics():
         other_answer = answers[random_number]
         f_answers = [correct_answer, other_answer]
         random.shuffle(f_answers)
-        ff_display = False
-        return render_to_response('play_game.html', {'playing_question': question, 'answers': f_answers, 'ff_display': ff_display})
+        return render_to_response('play_game.html', {'playing_question': question, 'answers': f_answers})
+
+    def right_one(request, pk):
+        question = Questions.objects.get(pk=pk)
+        correct_answer = question.correct_answer
+        answers = [correct_answer]
+        return render_to_response('play_game.html', {'playing_question': question, 'answers': answers})
 
     def start_game(request):
         played_questions_pks = []
-        ff_display = True
         while True:
             random_number = random.randint(1, Questions.objects.all().filter(checked=1).count())
             if random_number in played_questions_pks:
@@ -31,7 +35,7 @@ class GameTactics():
                 question = Questions.objects.get(pk=random_number)
                 answers = [question.answer1, question.answer2, question.answer3, question.correct_answer]
                 random.shuffle(answers)  # shuffle the answers
-                return render_to_response('play_game.html', {'playing_question': question, 'answers': answers, 'ff_display': ff_display})
+                return render_to_response('play_game.html', {'playing_question': question, 'answers': answers})
 
 
 class UserQuestionsList(LoginRequiredMixin, generic.ListView):

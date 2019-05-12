@@ -47,3 +47,15 @@ font-family: 'Stylish', sans-serif;
     text-align: center;
     background-color: #A8DADC;
 }
+
+.jokers {
+    background-color: #E63946;
+    height: max-content;
+    padding: 0;
+}
+
+.jokers a {
+    color: #F1FAEE;
+    border: solid 0.1vw #F1FAEE;
+    margin: 0;
+}

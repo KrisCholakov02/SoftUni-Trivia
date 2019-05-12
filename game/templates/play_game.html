@@ -11,8 +11,9 @@
         </div>
         {% endfor %}
     </div>
-    {% if ff_display %}
-    <a href="{% url 'fifty-fifty' playing_question.id %}">50/50</a>
-    {% endif %}
+    <div class="jokers">
+        <a href="{% url 'fifty-fifty' playing_question.id %}">50/50</a>
+        <a href="{% url 'right-answer' playing_question.id %}">Right Answer</a>
+    </div>
 </div>
 {% endblock %}
