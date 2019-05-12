@@ -7,18 +7,31 @@ from accounts.models import ProfileUser
 from questions.models import Questions
 
 
-def get_question(request):
-    played_questions_pks = []
-    while True:
-        random_number = random.randint(1, Questions.objects.all().filter(checked=1).count())
-        if random_number in played_questions_pks:
-            continue
-        else:
-            played_questions_pks.append(random_number)
-            question = Questions.objects.get(pk=random_number)
-            answers = [question.answer1, question.answer2, question.answer3, question.correct_answer]
-            random.shuffle(answers)  # shuffle the answers
-            return render_to_response('play_game.html', {'playing_question': question, 'answers': answers})
+class GameTactics():
+    def fifty_fifty(request, pk):
+        question = Questions.objects.get(pk=pk)
+        correct_answer = question.correct_answer
+        answers = [question.answer1, question.answer2, question.answer3]
+        random_number = random.randint(0, 2)
+        other_answer = answers[random_number]
+        f_answers = [correct_answer, other_answer]
+        random.shuffle(f_answers)
+        ff_display = False
+        return render_to_response('play_game.html', {'playing_question': question, 'answers': f_answers, 'ff_display': ff_display})
+
+    def start_game(request):
+        played_questions_pks = []
+        ff_display = True
+        while True:
+            random_number = random.randint(1, Questions.objects.all().filter(checked=1).count())
+            if random_number in played_questions_pks:
+                continue
+            else:
+                played_questions_pks.append(random_number)
+                question = Questions.objects.get(pk=random_number)
+                answers = [question.answer1, question.answer2, question.answer3, question.correct_answer]
+                random.shuffle(answers)  # shuffle the answers
+                return render_to_response('play_game.html', {'playing_question': question, 'answers': answers, 'ff_display': ff_display})
 
 
 class UserQuestionsList(LoginRequiredMixin, generic.ListView):

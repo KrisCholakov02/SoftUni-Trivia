@@ -11,5 +11,8 @@
         </div>
         {% endfor %}
     </div>
+    {% if ff_display %}
+    <a href="{% url 'fifty-fifty' playing_question.id %}">50/50</a>
+    {% endif %}
 </div>
 {% endblock %}
