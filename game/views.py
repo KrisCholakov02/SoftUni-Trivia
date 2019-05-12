@@ -17,7 +17,7 @@ class GameTactics:
             GameTactics.played_questions_pks = []
             return HttpResponse('Done')
         else:
-            return HttpResponse('You do not have permission.')
+            return render_to_response('permission_denied.html')
 
     def fifty_fifty(request, pk):
         question = Questions.objects.get(pk=pk)
