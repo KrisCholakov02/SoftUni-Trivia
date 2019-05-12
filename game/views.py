@@ -24,6 +24,16 @@ class GameTactics():
         answers = [correct_answer]
         return render_to_response('play_game.html', {'playing_question': question, 'answers': answers})
 
+    def remove_one(request, pk):
+        question = Questions.objects.get(pk=pk)
+        correct_answer = question.correct_answer
+        answers = [question.answer1, question.answer2, question.answer3]
+        random.shuffle(answers)
+        answers.remove(answers[2])
+        answers.append(correct_answer)
+        random.shuffle(answers)
+        return render_to_response('play_game.html', {'playing_question': question, 'answers': answers})
+
     def start_game(request):
         played_questions_pks = []
         while True:
