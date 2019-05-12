@@ -1,13 +1,24 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, render_to_response
 from django.views import generic
+from django.http import HttpResponse
 import random
 
 from accounts.models import ProfileUser
 from questions.models import Questions
 
 
-class GameTactics():
+class GameTactics:
+    played_questions_pks = []
+
+# This is admin method for emergency restart
+    def restart_game(request):
+        if request.user.is_superuser:
+            GameTactics.played_questions_pks = []
+            return HttpResponse('Done')
+        else:
+            return HttpResponse('You do not have permission.')
+
     def fifty_fifty(request, pk):
         question = Questions.objects.get(pk=pk)
         correct_answer = question.correct_answer
@@ -35,17 +46,29 @@ class GameTactics():
         return render_to_response('play_game.html', {'playing_question': question, 'answers': answers})
 
     def start_game(request):
-        played_questions_pks = []
         while True:
             random_number = random.randint(1, Questions.objects.all().filter(checked=1).count())
-            if random_number in played_questions_pks:
+            if random_number in GameTactics.played_questions_pks:
                 continue
             else:
-                played_questions_pks.append(random_number)
+                GameTactics.played_questions_pks.append(random_number)
                 question = Questions.objects.get(pk=random_number)
                 answers = [question.answer1, question.answer2, question.answer3, question.correct_answer]
-                random.shuffle(answers)  # shuffle the answers
+                random.shuffle(answers)
                 return render_to_response('play_game.html', {'playing_question': question, 'answers': answers})
+
+    def next_question(request):
+        while True:
+            random_number = random.randint(1, Questions.objects.all().filter(checked=1).count())
+            if random_number in GameTactics.played_questions_pks:
+                continue
+            else:
+                GameTactics.played_questions_pks.append(random_number)
+                question = Questions.objects.get(pk=random_number)
+                answers = [question.answer1, question.answer2, question.answer3, question.correct_answer]
+                random.shuffle(answers)
+                return render_to_response('play_game.html', {'playing_question': question, 'answers': answers})
+
 
 
 class UserQuestionsList(LoginRequiredMixin, generic.ListView):

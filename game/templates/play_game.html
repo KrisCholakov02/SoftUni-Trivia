@@ -7,7 +7,7 @@
     <div class="answersContainer">
         {% for ans in answers %}
         <div class="answer">
-            {{ ans }}
+           <a href="{% url 'next-question' %}">{{ ans }}</a>
         </div>
         {% endfor %}
     </div>
