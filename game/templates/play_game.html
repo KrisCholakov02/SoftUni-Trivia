@@ -5,19 +5,11 @@
         {{ playing_question.question }}
     </div>
     <div class="answersContainer">
+        {% for ans in answers %}
         <div class="answer">
-            {{ playing_question.answer1 }}
+            {{ ans }}
         </div>
-        <div class="answer">
-            {{ playing_question.answer2 }}
-        </div>
-        <div style="width: 100%; height: 0.1vw; background-color: #1D3557;"></div>
-        <div class="answer">
-            {{ playing_question.answer3 }}
-        </div>
-        <div class="answer">
-            {{ playing_question.correct_answer }}
-        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
