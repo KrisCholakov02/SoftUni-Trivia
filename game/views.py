@@ -88,8 +88,6 @@ class GameTactics:
             return render_to_response('end_game.html', {'points': GameTactics.points, 'user': request.user})
 
 
-
-
 class UserQuestionsList(LoginRequiredMixin, generic.ListView):
     model = Questions
     template_name = 'questions_list.html'
