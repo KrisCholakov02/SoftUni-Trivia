@@ -6,15 +6,28 @@
     </div>
     <div class="answersContainer">
         {% for ans in answers %}
+        {% if playing_question.correct_answer == ans %}
         <div class="answer">
-           <a href="{% url 'next-question' %}">{{ ans }}</a>
+           <a href="{% url 'next-question' pk=playing_question.id correct=1 %}">{{ ans }}</a>
         </div>
+        {% else %}
+        <div class="answer">
+           <a href="{% url 'next-question' pk=playing_question.id correct=0 %}">{{ ans }}</a>
+        </div>
+        {% endif %}
         {% endfor %}
     </div>
     <div class="jokers">
+        {% if ff_display %}
         <a href="{% url 'fifty-fifty' playing_question.id %}">50/50</a>
+        {% endif %}
+        {% if ra_display %}
         <a href="{% url 'right-answer' playing_question.id %}">Right Answer</a>
+        {% endif %}
+        {% if remove_display %}
         <a href="{% url 'remove-answer' playing_question.id %}">Remove Answer</a>
+        {% endif %}
     </div>
+    <h2>{{ points }}</h2>
 </div>
 {% endblock %}
