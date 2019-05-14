@@ -5,7 +5,7 @@ from django.http import HttpResponse
 import random
 
 from accounts.models import ProfileUser
-from questions.models import Questions
+from questions.models import Questions, Level
 
 
 class GameTactics:
@@ -14,6 +14,8 @@ class GameTactics:
     ff_display = True
     ra_display = True
     remove_display = True
+    number_of_all_questions = 5 * Level.objects.all().count()
+    questions_in_db = Questions.objects.all().filter(checked=1).count()
 
 
 # This is admin method for emergency restart
@@ -60,7 +62,7 @@ class GameTactics:
         GameTactics.ra_display = True
         GameTactics.remove_display = True
         while True:
-            random_number = random.randint(1, Questions.objects.all().filter(checked=1).count() + 1)
+            random_number = random.randint(1, Questions.objects.all().filter(checked=1, level=Level.objects.get(pk=1)).count())
             if random_number in GameTactics.played_questions_pks:
                 continue
             else:
@@ -72,18 +74,30 @@ class GameTactics:
 
     def next_question(request, pk, correct):
         question = Questions.objects.get(pk=pk)
-        questions_in_db = Questions.objects.all().filter(checked=1).count()
-        if correct == '1':
+        cnt = len(GameTactics.played_questions_pks)
+        if 0 <= cnt < 5:
+            level = Level.objects.get(pk=1)
+        elif 5 <= cnt < 10:
+            level = Level.objects.get(pk=2)
+        elif 10 <= cnt < 15:
+            level = Level.objects.get(pk=3)
+        else:
+            level = 0
+        if level == 0:
+            return render_to_response('end_game.html', {'points': GameTactics.points, 'user': request.user})
+        elif correct == '1':
             GameTactics.points += question.level.points
             while True:
-                random_number = random.randint(1, Questions.objects.all().filter(checked=1).count() + 1)
-                if len(GameTactics.played_questions_pks) == questions_in_db + 1:
-                    return render_to_response('end_game.html', {'points': GameTactics.points, 'user': request.user})
-                elif random_number in GameTactics.played_questions_pks:
+                random_number = random.randint(1, Questions.objects.all().filter(checked=1).count())
+                if Questions.objects.get(pk=random_number) not in Questions.objects.all().filter(level=level):
                     continue
+                if random_number in GameTactics.played_questions_pks:
+                    continue
+                elif len(GameTactics.played_questions_pks) == (GameTactics.questions_in_db + 1):
+                    return render_to_response('end_game.html', {'points': GameTactics.points, 'user': request.user})
                 else:
                     GameTactics.played_questions_pks.append(random_number)
-                    question = Questions.objects.get(pk=random_number)
+                    question = Questions.objects.get(pk=random_number, level=level)
                     answers = [question.answer1, question.answer2, question.answer3, question.correct_answer]
                     random.shuffle(answers)
                     return render_to_response('play_game.html', {'playing_question': question, 'answers': answers, 'user': request.user, 'points': GameTactics.points, 'ff_display': GameTactics.ff_display, 'ra_display': GameTactics.ra_display, 'remove_display': GameTactics.remove_display})

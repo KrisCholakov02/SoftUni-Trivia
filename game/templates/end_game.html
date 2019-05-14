@@ -2,6 +2,7 @@
 
 {% block 'body' %}
 <div class="information-container">
-    <h2>{{ user.name }}  has ended the game with {{ points }}.</h2>
+    <h2>{{ user.username }}  has ended the game with {{ points }}.</h2>
+    <a href="{% url 'play' %}" style="color: #E63946;">Do you want to play again?</a>
 </div>
 {% endblock %}
