@@ -60,7 +60,7 @@ class GameTactics:
         GameTactics.ra_display = True
         GameTactics.remove_display = True
         while True:
-            random_number = random.randint(1, Questions.objects.all().filter(checked=1).count())
+            random_number = random.randint(1, Questions.objects.all().filter(checked=1).count() + 1)
             if random_number in GameTactics.played_questions_pks:
                 continue
             else:
@@ -72,11 +72,14 @@ class GameTactics:
 
     def next_question(request, pk, correct):
         question = Questions.objects.get(pk=pk)
+        questions_in_db = Questions.objects.all().filter(checked=1).count()
         if correct == '1':
             GameTactics.points += question.level.points
             while True:
-                random_number = random.randint(1, Questions.objects.all().filter(checked=1).count())
-                if random_number in GameTactics.played_questions_pks:
+                random_number = random.randint(1, Questions.objects.all().filter(checked=1).count() + 1)
+                if len(GameTactics.played_questions_pks) == questions_in_db + 1:
+                    return render_to_response('end_game.html', {'points': GameTactics.points, 'user': request.user})
+                elif random_number in GameTactics.played_questions_pks:
                     continue
                 else:
                     GameTactics.played_questions_pks.append(random_number)
