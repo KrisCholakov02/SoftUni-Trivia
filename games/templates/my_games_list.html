@@ -1,0 +1,19 @@
+{% extends 'index.html' %}
+{% block 'body' %}
+
+<div class="row" style="z-index: 0;">
+    <h1 style="font-size: 8vw; width: 50%; margin-left: 25%; text-align: center;">My Games</h1>
+    {% for g in games %}
+    <div class="col-lg-4">
+        <div class="card" style="width: 18rem; margin-top: 2vw">
+            <div class="card-body">
+                <h5 class="card-title">{{g.player.username}}'s games</h5>
+                <p class="card-text">Number of questions: {{g.number_of_questions}}</p>
+                <p class="card-text">Reached level: {{g.last_level}}</p>
+                <p class="card-text">Points: {{g.points}}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

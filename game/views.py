@@ -6,6 +6,7 @@ import random
 
 from accounts.models import ProfileUser
 from questions.models import Questions, Level
+from games.views import create_game
 
 
 class GameTactics:
@@ -84,6 +85,7 @@ class GameTactics:
         else:
             level = 0
         if level == 0:
+            create_game(request.user, cnt, level, GameTactics.points)
             return render_to_response('end_game.html', {'points': GameTactics.points, 'user': request.user})
         elif correct == '1':
             GameTactics.points += question.level.points
@@ -94,6 +96,7 @@ class GameTactics:
                 if random_number in GameTactics.played_questions_pks:
                     continue
                 elif len(GameTactics.played_questions_pks) == (GameTactics.questions_in_db + 1):
+                    create_game(request.user, cnt, level, GameTactics.points)
                     return render_to_response('end_game.html', {'points': GameTactics.points, 'user': request.user})
                 else:
                     GameTactics.played_questions_pks.append(random_number)
@@ -102,6 +105,7 @@ class GameTactics:
                     random.shuffle(answers)
                     return render_to_response('play_game.html', {'playing_question': question, 'answers': answers, 'user': request.user, 'points': GameTactics.points, 'ff_display': GameTactics.ff_display, 'ra_display': GameTactics.ra_display, 'remove_display': GameTactics.remove_display})
         else:
+            create_game(request.user, cnt, level, GameTactics.points)
             return render_to_response('end_game.html', {'points': GameTactics.points, 'user': request.user})
 
 
