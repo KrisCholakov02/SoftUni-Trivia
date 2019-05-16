@@ -26,6 +26,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Custom
+LOGOUT_REDIRECT_URL = '../../game/'
 # Application definition
 
 INSTALLED_APPS = [

@@ -12,7 +12,7 @@ from accounts.models import ProfileUser
 def has_access_to_modify(current_user, questions):
     if current_user.is_superuser:
         return True
-    elif current_user.id == questions.user.id:
+    elif current_user.id == questions.author.id:
         return True
     return False
 
@@ -40,7 +40,7 @@ class QuestionCreate(LoginRequiredMixin, generic.CreateView):
     success_url = '/questions/mine/'
 
     def form_valid(self, form):
-        author = ProfileUser.objects.all().filter(user__pk=self.request.user.id)[0]
+        author = ProfileUser.objects.get(user__pk=self.request.user.id)
         form.instance.author = author
         return super().form_valid(form)
 
