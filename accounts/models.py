@@ -6,11 +6,11 @@ from django.db.models.signals import post_save
 
 class ProfileUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=40, default='')
-    last_name = models.CharField(max_length=40, default='')
+    first_name = models.CharField(max_length=40, default='', blank=True)
+    last_name = models.CharField(max_length=40, default='', blank=True)
+    description = models.CharField(max_length=100, default='', blank=True)
+    city = models.CharField(max_length=100, default='', blank=True)
     profile_picture = models.URLField(default='https://upload.wikimedia.org/wikipedia/common/7/72/Default-welcomer.png')
-    description = models.CharField(max_length=100, default='')
-    city = models.CharField(max_length=100, default='')
 
     def __str__(self):
         return f"{self.user}"

@@ -18,7 +18,6 @@ class GameTactics:
     number_of_all_questions = 5 * Level.objects.all().count()
     questions_in_db = Questions.objects.all().filter(checked=1).count()
 
-
 # This is admin method for emergency restart
     def restart_game(request):
         if request.user.is_superuser:
