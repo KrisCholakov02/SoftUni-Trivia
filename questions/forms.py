@@ -57,4 +57,4 @@ class CreateQuestionForm(forms.ModelForm):
 
     class Meta:
         model = Questions
-        fields = ('id', 'question', 'correct_answer', 'answer1', 'answer2', 'answer3', 'level')
+        fields = ('question', 'correct_answer', 'answer1', 'answer2', 'answer3', 'level')

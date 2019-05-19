@@ -16,7 +16,7 @@ class EditProfileUserForm(forms.ModelForm):
             'class': 'form-control ans-inp'
         }
     ))
-    profile_picture = forms.URLField(required=True, widget=forms.TextInput(
+    profile_picture = forms.URLField(required=True, widget=forms.URLInput(
         attrs={
             'class': 'form-control ans-inp'
         }
