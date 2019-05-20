@@ -23,4 +23,3 @@ class UserGamesList(LoginRequiredMixin, generic.ListView):
             return games
         except:
             return []
-kl;''
