@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator, MaxLengthValidator, MaxVal
 from questions.models import Level
 
 
+# creating 'PlayedGames' model
 class PlayedGames(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     number_of_questions = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(15)], default=0)

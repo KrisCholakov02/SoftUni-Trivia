@@ -5,28 +5,29 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from accounts.models import ProfileUser
 
 
+# form that allows the user to change his/her information
 class EditProfileUserForm(forms.ModelForm):
-    first_name = forms.CharField(required=True, widget=forms.TextInput(
+    first_name = forms.CharField(widget=forms.TextInput(
         attrs={
             'class': 'form-control ans-inp'
         }
     ))
-    last_name = forms.CharField(required=True, widget=forms.TextInput(
+    last_name = forms.CharField(widget=forms.TextInput(
         attrs={
             'class': 'form-control ans-inp'
         }
     ))
-    profile_picture = forms.URLField(required=True, widget=forms.URLInput(
+    profile_picture = forms.URLField(widget=forms.URLInput(
         attrs={
             'class': 'form-control ans-inp'
         }
     ))
-    description = forms.CharField(required=True, widget=forms.TextInput(
+    description = forms.CharField(widget=forms.TextInput(
         attrs={
             'class': 'form-control ans-inp'
         }
     ))
-    city = forms.CharField(required=True, widget=forms.TextInput(
+    city = forms.CharField(widget=forms.TextInput(
         attrs={
             'class': 'form-control ans-inp'
         }

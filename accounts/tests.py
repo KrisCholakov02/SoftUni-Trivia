@@ -9,6 +9,7 @@ class SetupClass(TestCase):
         self.user = User.objects.create(email="user@mp.com", password="user", first_name="user", phone=12345678)
 
 
+# testing the sign up
 class UserFormTest(TestCase):
     # Valid Form Data
     def test_UserForm_valid(self):
