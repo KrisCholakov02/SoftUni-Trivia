@@ -6,7 +6,8 @@ from .models import PlayedGames
 
 
 def create_game(user, number_of_questions, last_level, points):
-    played_game = PlayedGames.objects.create(player=user, number_of_questions=number_of_questions, last_level=last_level, points=points)
+    played_game = PlayedGames.objects.create(player=user, number_of_questions=number_of_questions,
+                                             last_level=last_level, points=points)
 
 
 class UserGamesList(LoginRequiredMixin, generic.ListView):
