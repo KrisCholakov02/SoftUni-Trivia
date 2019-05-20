@@ -18,7 +18,7 @@ class GameTactics:
     number_of_all_questions = 5 * Level.objects.all().count()
     questions_in_db = Questions.objects.all().filter(checked=1).count()
 
-# This is admin method for emergency restart
+    # This is admin method for emergency restart
     def restart_game(request):
         if request.user.is_superuser:
             GameTactics.played_questions_pks = []
@@ -26,63 +26,70 @@ class GameTactics:
         else:
             return render_to_response('permission_denied.html')
 
+    # function for the joker '50/50'
     def fifty_fifty(request, pk):
-        question = Questions.objects.get(pk=pk)
-        correct_answer = question.correct_answer
-        answers = [question.answer1, question.answer2, question.answer3]
-        random_number = random.randint(0, 2)
-        other_answer = answers[random_number]
-        f_answers = [correct_answer, other_answer]
-        random.shuffle(f_answers)
-        GameTactics.ff_display = False
-        return render_to_response('play_game.html', {'playing_question': question, 'answers': f_answers,
-                                                     'user': request.user, 'points': GameTactics.points,
-                                                     'ff_display': GameTactics.ff_display,
-                                                     'ra_display': GameTactics.ra_display,
-                                                     'remove_display': GameTactics.remove_display})
+        if GameTactics.ff_display:  # checking if the joker is used
+            question = Questions.objects.get(pk=pk)  # gets playing question
+            correct_answer = question.correct_answer  # gets the correct answer
+            answers = [question.answer1, question.answer2, question.answer3]  # makes list of other answers
+            random_number = random.randint(0, 2)
+            other_answer = answers[random_number]  # choosing one of the other answers
+            f_answers = [correct_answer, other_answer]  # making list of the correct one and other one
+            random.shuffle(f_answers)  # shuffling so not to guess
+            GameTactics.ff_display = False  # changing the variable so not to show the joker button again
+            return render_to_response('play_game.html', {'playing_question': question, 'answers': f_answers,
+                                                         'user': request.user, 'points': GameTactics.points,
+                                                         'ff_display': GameTactics.ff_display,
+                                                         'ra_display': GameTactics.ra_display,
+                                                         'remove_display': GameTactics.remove_display})
 
+    # function for the joker 'right answer'
     def right_answer(request, pk):
-        question = Questions.objects.get(pk=pk)
-        correct_answer = question.correct_answer
-        answers = [correct_answer]
-        GameTactics.ra_display = False
-        return render_to_response('play_game.html', {'playing_question': question, 'answers': answers,
-                                                     'user': request.user, 'points': GameTactics.points,
-                                                     'ff_display': GameTactics.ff_display,
-                                                     'ra_display': GameTactics.ra_display,
-                                                     'remove_display': GameTactics.remove_display})
+        if GameTactics.ra_display:  # checking if the joker is used
+            question = Questions.objects.get(pk=pk)  # gets playing question
+            correct_answer = question.correct_answer  # gets the correct answer
+            answers = [correct_answer]  # making list only from the correct answer
+            GameTactics.ra_display = False  # changing the variable so not to show the joker button again
+            return render_to_response('play_game.html', {'playing_question': question, 'answers': answers,
+                                                         'user': request.user, 'points': GameTactics.points,
+                                                         'ff_display': GameTactics.ff_display,
+                                                         'ra_display': GameTactics.ra_display,
+                                                         'remove_display': GameTactics.remove_display})
 
+    # function for the joker 'remove answer'
     def remove_answer(request, pk):
-        question = Questions.objects.get(pk=pk)
-        correct_answer = question.correct_answer
-        answers = [question.answer1, question.answer2, question.answer3]
-        random.shuffle(answers)
-        answers.remove(answers[2])
-        answers.append(correct_answer)
-        random.shuffle(answers)
-        GameTactics.remove_display = False
-        return render_to_response('play_game.html', {'playing_question': question, 'answers': answers,
-                                                     'user': request.user, 'points': GameTactics.points,
-                                                     'ff_display': GameTactics.ff_display,
-                                                     'ra_display': GameTactics.ra_display,
-                                                     'remove_display': GameTactics.remove_display})
+        if GameTactics.remove_display:  # checking if the joker is used
+            question = Questions.objects.get(pk=pk)  # gets playing question
+            correct_answer = question.correct_answer  # gets the correct answer
+            answers = [question.answer1, question.answer2, question.answer3]  # makes list of other answers
+            random.shuffle(answers)
+            answers.remove(answers[2])  # remove one of the other answers
+            answers.append(correct_answer)  # appending the correct one to the list
+            random.shuffle(answers)  # shuffling so not to guess
+            GameTactics.remove_display = False  # changing the variable so not to show the joker button again
+            return render_to_response('play_game.html', {'playing_question': question, 'answers': answers,
+                                                         'user': request.user, 'points': GameTactics.points,
+                                                         'ff_display': GameTactics.ff_display,
+                                                         'ra_display': GameTactics.ra_display,
+                                                         'remove_display': GameTactics.remove_display})
 
     def start_game(request):
-        GameTactics.played_questions_pks = []
-        GameTactics.points = 0
-        GameTactics.ff_display = True
-        GameTactics.ra_display = True
-        GameTactics.remove_display = True
+        GameTactics.played_questions_pks = []  # setting variable to its default value
+        GameTactics.points = 0  # setting variable to its default value
+        GameTactics.ff_display = True  # setting variable to its default value
+        GameTactics.ra_display = True  # setting variable to its default value
+        GameTactics.remove_display = True  # setting variable to its default value
         while True:
             random_number = random.randint(1, Questions.objects.all().filter(checked=1, level=Level.objects.get(pk=1))
-                                           .count())
-            if random_number in GameTactics.played_questions_pks:
+                                           .count())  # getting random number from 1 to Questions DB's length
+            if random_number in GameTactics.played_questions_pks:  # checking if the number is not already chosen
                 continue
             else:
-                GameTactics.played_questions_pks.append(random_number)
-                question = Questions.objects.get(pk=random_number)
+                GameTactics.played_questions_pks.append(random_number)  # appending the number(pk) to played ones
+                question = Questions.objects.get(pk=random_number)  # getting random question
                 answers = [question.answer1, question.answer2, question.answer3, question.correct_answer]
-                random.shuffle(answers)
+                # making list of all answers
+                random.shuffle(answers)  # shuffling so not to guess
                 return render_to_response('play_game.html', {'playing_question': question, 'answers': answers,
                                                              'user': request.user, 'points': GameTactics.points,
                                                              'ff_display': GameTactics.ff_display,
@@ -90,40 +97,56 @@ class GameTactics:
                                                              'remove_display': GameTactics.remove_display})
 
     def next_question(request, pk, correct):
-        question = Questions.objects.get(pk=pk)
-        cnt = len(GameTactics.played_questions_pks)
+        level_err = False
+        question = Questions.objects.get(pk=pk)  # gets playing question
+        cnt = len(GameTactics.played_questions_pks)  # getting the number of played questions
+        # logic for changing the level during the game
         if 0 <= cnt < 5:
-            level = Level.objects.get(pk=1)
+            level = Level.objects.get(pk=1)  # changing the level
         elif 5 <= cnt < 10:
-            level = Level.objects.get(pk=2)
+            level = Level.objects.get(pk=2)  # changing the level
         elif 10 <= cnt < 15:
-            level = Level.objects.get(pk=3)
+            level = Level.objects.get(pk=3)  # changing the level
+        elif cnt == 15:
+            level = 'end'
         else:
-            level = 0
-        if level == 0:
+            level_err = True
+        # ending the game while done some bugs
+        if level_err:
             create_game(request.user, cnt, level, GameTactics.points)
             return render_to_response('end_game.html', {'points': GameTactics.points, 'user': request.user})
-        elif correct == '1':
-            GameTactics.points += question.level.points
+        # if everything is OK
+        if level == 'end':  # if the player has done all the questions
+            level = Level.objects.get(pk=3)  # setting the level to the maximum one
+            create_game(request.user, cnt, level, GameTactics.points)  # posting the played game information
+            return render_to_response('end_game.html', {'points': GameTactics.points, 'user': request.user})
+        elif correct == '1':  # if the chosen answer is correct
+            GameTactics.points += question.level.points  # increasing points with the current for the level
             while True:
                 random_number = random.randint(1, Questions.objects.all().filter(checked=1).count())
+                # getting random number from 1 to Questions DB's length
                 if Questions.objects.get(pk=random_number) not in Questions.objects.all().filter(level=level):
+                    # preventing choosing non-existing
                     continue
-                if random_number in GameTactics.played_questions_pks:
+                if random_number in GameTactics.played_questions_pks:  # checking if the number is not already chosen
                     continue
-                elif len(GameTactics.played_questions_pks) == (GameTactics.questions_in_db + 1):
+                elif len(GameTactics.played_questions_pks) == GameTactics.questions_in_db + 1:
+                    # if there are not enough questions for the game
                     create_game(request.user, cnt, level, GameTactics.points)
                     return render_to_response('end_game.html', {'points': GameTactics.points, 'user': request.user})
                 else:
-                    GameTactics.played_questions_pks.append(random_number)
-                    question = Questions.objects.get(pk=random_number, level=level)
+                    GameTactics.played_questions_pks.append(random_number)  # appending playing question to played ones
+                    question = Questions.objects.get(pk=random_number, level=level)  # getting random question
                     answers = [question.answer1, question.answer2, question.answer3, question.correct_answer]
+                    # making list of all answers
                     random.shuffle(answers)
+                    # shuffling so not to guess
                     return render_to_response('play_game.html', {'playing_question': question, 'answers': answers,
                                                                  'user': request.user, 'points': GameTactics.points,
                                                                  'ff_display': GameTactics.ff_display,
                                                                  'ra_display': GameTactics.ra_display,
                                                                  'remove_display': GameTactics.remove_display})
+        # preventing unknown bugs
         else:
             create_game(request.user, cnt, level, GameTactics.points)
             return render_to_response('end_game.html', {'points': GameTactics.points, 'user': request.user})
