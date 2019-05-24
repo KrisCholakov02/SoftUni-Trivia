@@ -4,7 +4,7 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Questions, Level
-from .forms import CreateQuestionForm, LevelForm
+from .forms import *
 
 from accounts.models import ProfileUser
 
@@ -14,6 +14,13 @@ def has_access_to_modify(current_user, questions):
     if current_user.is_superuser:
         return True
     elif current_user.id == questions.author.id:
+        return True
+    return False
+
+
+# function that checks if the user is superuser
+def if_user_is_superuser(current_user):
+    if current_user.is_superuser:
         return True
     return False
 
@@ -82,8 +89,9 @@ class QuestionEdit(LoginRequiredMixin, generic.UpdateView):
     success_url = '/game/'
 
     def form_valid(self, form):
-        author = ProfileUser.objects.all().filter(user__pk=self.request.user.id)[0]
-        form.instance.author = author
+        if not form.instance.author:
+            author = ProfileUser.objects.all().filter(user__pk=self.request.user.id)[0]
+            form.instance.author = author
         return super().form_valid(form)
 
     def get(self, request, pk):
@@ -92,6 +100,9 @@ class QuestionEdit(LoginRequiredMixin, generic.UpdateView):
             return render(request, 'permission_denied.html')
         instance = Questions.objects.get(pk=pk)
         form = CreateQuestionForm(request.POST or None, instance=instance)
+        if if_user_is_superuser(self.request.user):
+            instance = Questions.objects.get(pk=pk)
+            form = AdminQuestionForm(request.POST or None, instance=instance)
         return render(request, 'question_create.html', {'form': form})
 
 

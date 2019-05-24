@@ -21,7 +21,7 @@ class Questions(models.Model):
     answer2 = models.CharField(max_length=150)
     answer3 = models.CharField(max_length=150)
     level = models.ForeignKey(Level, on_delete=models.CASCADE, blank=False)
-    checked = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(1)], default=0)
+    checked = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1)], default=0)
 
     def __str__(self):
         return f"Question:{self.pk} is {self.level.name} with {self.level.points}"

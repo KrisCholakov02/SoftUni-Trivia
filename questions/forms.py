@@ -10,7 +10,7 @@ class LevelForm(forms.ModelForm):
             'class': 'form-control ans-inp'
         }
     ))
-    points = forms.IntegerField(required=True, validators=[MinValueValidator(0), MaxValueValidator(1)])
+    points = forms.IntegerField(required=True)
 
     class Meta:
         model = Level
@@ -58,3 +58,51 @@ class CreateQuestionForm(forms.ModelForm):
     class Meta:
         model = Questions
         fields = ('question', 'correct_answer', 'answer1', 'answer2', 'answer3', 'level')
+
+
+class AdminQuestionForm(forms.ModelForm):
+    question = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control ans-inp'
+        }
+    ))
+    correct_answer = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control ans-inp'
+        }
+    ))
+    answer1 = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control ans-inp'
+        }
+    ))
+    answer1 = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control ans-inp'
+        }
+    ))
+    answer2 = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control ans-inp'
+        }
+    ))
+    answer3 = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control ans-inp'
+        }
+    ))
+    level = forms.ModelChoiceField(queryset=Level.objects.all(),
+                                   widget=forms.Select(
+                                       attrs={
+                                           'class': 'form-control ans-inp'
+                                       }
+                                   ))
+    checked = forms.IntegerField(required=True, widget=forms.NumberInput(
+        attrs={
+            'class': 'form-control ans-inp'
+        }
+    ))
+
+    class Meta:
+        model = Questions
+        fields = ('question', 'correct_answer', 'answer1', 'answer2', 'answer3', 'level', 'checked')
