@@ -38,8 +38,14 @@ body{
 
 ul{
 	list-style-type: none;
-  float: right;
+    float: right;
 }
+
+ul li ul {
+    height: max-content;
+    width: max-content;
+}
+
 .main_element > ul >li{
   padding: 0 30px;
   display: block;
@@ -63,8 +69,8 @@ a:hover{
   border: solid 0.1vw #1D3557;
 }
 .inside_items li{
-  width: 200px;
-  height: 50px;
+  width: 20vw;
+  height: max-content;
   line-height: 50px;
   padding: 0 30px;
   background-color: #A8DADC;
