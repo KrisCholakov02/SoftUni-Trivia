@@ -9,5 +9,5 @@ urlpatterns = [
     re_path('^details/(?P<pk>\d+)/$', views.QuestionDetail.as_view(), name='question-detail'),
     re_path('^delete/(?P<pk>\d+)/$', views.QuestionDelete.as_view(), name='question-delete'),
     re_path('^edit/(?P<pk>\d+)/$', views.QuestionEdit.as_view(), name='question-edit'),
-
+    path('unchecked/', views.UncheckedQuestionsList.as_view(), name='unchecked_questions'),
 ]

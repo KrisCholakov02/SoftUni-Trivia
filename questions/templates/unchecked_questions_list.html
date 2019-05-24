@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+{% block 'body' %}
+
+<div class="row" style="z-index: 0;">
+    <h1 style="font-size: 8vw; width: 50%; margin-left: 25%; text-align: center;">Unchecked questions</h1>
+    {% for q in questions %}
+    <div class="col-lg-4">
+        <div class="card" style="width: 18rem; margin-top: 2vw">
+            <div class="card-body">
+                <h5 class="card-title">{{q.question}}</h5>
+                <p class="card-text">Correct Answer: {{q.correct_answer}}</p>
+                <a href="{% url 'question-detail' q.id %}" class="btn btn-primary submit-btn" style="color: #F1FAEE;">Details</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

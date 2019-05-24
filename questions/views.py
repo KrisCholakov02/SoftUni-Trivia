@@ -101,3 +101,21 @@ class QuestionDetail(LoginRequiredMixin, generic.DetailView):
     login_url = '/accounts/login/'
     context_object_name = 'question'
     template_name = 'question_detail.html'
+
+
+# getting unchecked questions
+class UncheckedQuestionsList(LoginRequiredMixin, generic.ListView):
+    model = Questions
+    template_name = 'unchecked_questions_list.html'
+    context_object_name = 'questions'
+
+# function that gets only unchecked questions
+    def get_queryset(self):
+        if not self.request.user.is_superuser:
+            return render(self.request, 'permission_denied.html')
+        else:
+            try:
+                questions = Questions.objects.all().filter(checked=0)  # getting only unchecked questions
+                return questions
+            except:
+                return []
