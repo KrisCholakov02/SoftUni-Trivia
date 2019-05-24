@@ -14,9 +14,6 @@
                     <li><a href="{% url 'profile-user' user.id %}">Details</a></li>
                     <li><a href="{% url 'my-games' %}">My games</a></li>
                     <li><a href="{% url 'my_questions' %}">My questions</a></li>
-                    {% if user.is_superuser %}
-                    <li><a style="color: #E63946" href="{% url 'unchecked_questions' %}">Unchecked questions</a></li>
-                    {% endif %}
                 </ul>
             </div>
         </li>
