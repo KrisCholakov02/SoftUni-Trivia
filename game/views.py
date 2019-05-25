@@ -17,6 +17,7 @@ class GameTactics:
     remove_display = True
     number_of_all_questions = 5 * Level.objects.all().count()
     questions_in_db = Questions.objects.all().filter(checked=1).count()
+    bug_pks = []
 
     # This is admin method for emergency restart
     def restart_game(request):
@@ -108,6 +109,10 @@ class GameTactics:
         level_err = False
         question = Questions.objects.get(pk=pk)  # gets playing question
         cnt = len(GameTactics.played_questions_pks)  # getting the number of played questions
+        if pk in GameTactics.bug_pks:   # checks if page is reloaded
+            return render_to_response('reload_page_bug.html')
+        else:
+            GameTactics.bug_pks.append(pk)
         # logic for changing the level during the game
         if 0 <= cnt < 5:
             level = Level.objects.get(pk=1)  # changing the level
@@ -119,7 +124,7 @@ class GameTactics:
             level = 'end'
         else:
             level_err = True
-        # ending the game while done some bugs
+        # ending the game when did some bugs
         if level_err:
             create_game(request.user, cnt, level, GameTactics.points)
             return render_to_response('end_game.html', {'points': GameTactics.points, 'user': request.user})
