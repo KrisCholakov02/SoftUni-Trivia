@@ -43,6 +43,8 @@ class GameTactics:
                                                          'ff_display': GameTactics.ff_display,
                                                          'ra_display': GameTactics.ra_display,
                                                          'remove_display': GameTactics.remove_display})
+        else:
+            render_to_response('play_game.html')
 
     # function for the joker 'right answer'
     def right_answer(request, pk):
@@ -56,6 +58,8 @@ class GameTactics:
                                                          'ff_display': GameTactics.ff_display,
                                                          'ra_display': GameTactics.ra_display,
                                                          'remove_display': GameTactics.remove_display})
+        else:
+            render_to_response('play_game.html')
 
     # function for the joker 'remove answer'
     def remove_answer(request, pk):
@@ -73,6 +77,8 @@ class GameTactics:
                                                          'ff_display': GameTactics.ff_display,
                                                          'ra_display': GameTactics.ra_display,
                                                          'remove_display': GameTactics.remove_display})
+        else:
+            render_to_response('play_game.html')
 
     def start_game(request):
         GameTactics.played_questions_pks = []  # setting variable to its default value
