@@ -44,7 +44,7 @@ class GameTactics:
                                                          'ra_display': GameTactics.ra_display,
                                                          'remove_display': GameTactics.remove_display})
         else:
-            render_to_response('used-joker.html')
+            render_to_response('used-joker.html')  # rendering to page that tells you the joker is used
 
     # function for the joker 'right answer'
     def right_answer(request, pk):
@@ -59,7 +59,7 @@ class GameTactics:
                                                          'ra_display': GameTactics.ra_display,
                                                          'remove_display': GameTactics.remove_display})
         else:
-            render_to_response('used-joker.html')
+            render_to_response('used-joker.html')  # rendering to page that tells you the joker is used
 
     # function for the joker 'remove answer'
     def remove_answer(request, pk):
@@ -78,7 +78,7 @@ class GameTactics:
                                                          'ra_display': GameTactics.ra_display,
                                                          'remove_display': GameTactics.remove_display})
         else:
-            render_to_response('used-joker.html')
+            render_to_response('used-joker.html')  # rendering to page that tells you the joker is used
 
     def start_game(request):
         GameTactics.played_questions_pks = []  # setting variable to its default value
